@@ -11,6 +11,13 @@
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/container">
                 <items jcr:primaryType="nt:unstructured">
+                    <!-- Getting Started with AEM Sites - Component Basics - HTL (HTML Template Language) and Dialogs -->
+                    <title
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Title"
+                        name="./title"/>
+                    <!-- Getting Started with AEM Sites - Component Basics - HTL (HTML Template Language) and Dialogs -->
                     <text
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
