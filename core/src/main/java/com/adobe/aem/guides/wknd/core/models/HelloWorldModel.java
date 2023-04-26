@@ -19,9 +19,11 @@ import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_T
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
@@ -33,10 +35,10 @@ import com.day.cq.wcm.api.PageManager;
 
 import java.util.Optional;
 
-@Model(adaptables = Resource.class)
+@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class HelloWorldModel {
 
-    @ValueMapValue(name=PROPERTY_RESOURCE_TYPE, injectionStrategy=InjectionStrategy.OPTIONAL)
+    @ValueMapValue(name=PROPERTY_RESOURCE_TYPE)
     @Default(values="No resourceType")
     protected String resourceType;
 
@@ -47,6 +49,13 @@ public class HelloWorldModel {
 
     private String message;
 
+    // Getting Started with AEM Sites - Component Basics - Sling Models
+    @ValueMapValue
+    private String title;
+
+    @ValueMapValue
+    private String text;
+
     @PostConstruct
     protected void init() {
         PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
@@ -54,13 +63,22 @@ public class HelloWorldModel {
                 .map(pm -> pm.getContainingPage(currentResource))
                 .map(Page::getPath).orElse("");
 
-        message = "Hello World!\n"
+        message = "Default Message from Model\n"
             + "Resource type is: " + resourceType + "\n"
             + "Current page is:  " + currentPagePath + "\n";
     }
 
     public String getMessage() {
         return message;
+    }
+
+    // Getting Started with AEM Sites - Component Basics - Sling Models
+    public String getTitle() {
+        return StringUtils.isNotBlank(title) ? title : "Default Title from Model";
+    }
+
+    public String getText() {
+        return StringUtils.isNotBlank(text) ? text : "Default Text from Model";
     }
 
 }
